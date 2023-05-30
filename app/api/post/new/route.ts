@@ -1,8 +1,8 @@
-import { NextApiRequest } from "next";
 import Post from "@/models/post";
 import { connectToDB } from "@/utils/database";
+import { NextRequest } from "next/server";
 
-export const POST = async (request: NextApiRequest) => {
+export const POST = async (request: NextRequest) => {
   const { userId, post, tag } = await request.json();
 
   try {

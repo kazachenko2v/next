@@ -1,6 +1,24 @@
 import Link from "next/link";
+import { Dispatch, FormEvent, SetStateAction } from "react";
 
-const Form = ({ type, post, setPost, submitting, handleSubmit }: any) => {
+const Form = ({
+  type,
+  post,
+  setPost,
+  submitting,
+  handleSubmit,
+}: {
+  type: string;
+  post: { post: string; tag: string };
+  setPost: Dispatch<
+    SetStateAction<{
+      post: string;
+      tag: string;
+    }>
+  >;
+  submitting: boolean;
+  handleSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void>;
+}) => {
   return (
     <section className="w-full max-w-full flex justify-start items-start flex-col">
       <h1 className="mt-5 text-5xl font-extrabold leading-[1.15] text-black sm:text-6xl text-left">

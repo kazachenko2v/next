@@ -6,7 +6,6 @@ export const connectToDB = async () => {
   mongoose.set("strictQuery", true);
 
   if (isConnected) {
-    console.log("MDB connected");
     return;
   }
 
@@ -15,7 +14,6 @@ export const connectToDB = async () => {
       dbName: "Next",
     });
     isConnected = true;
-    console.log("connected to db");
   } catch (error) {
     console.log(error);
   }

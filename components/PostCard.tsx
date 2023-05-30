@@ -4,8 +4,14 @@ import { useState } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
+import { PostCardProps } from "@/types";
 
-const PostCard = ({ post, handleEdit, handleDelete, handleTagClick }: any) => {
+const PostCard: React.FC<PostCardProps> = ({
+  post,
+  handleEdit,
+  handleDelete,
+  handleTagClick,
+}) => {
   const { data: session } = useSession();
   const pathName = usePathname();
   const router = useRouter();
@@ -13,8 +19,9 @@ const PostCard = ({ post, handleEdit, handleDelete, handleTagClick }: any) => {
   const [copied, setCopied] = useState("");
 
   const handleProfileClick = () => {
-
-    if (post.creator._id === session?.user.id) return router.push("/profile");
+    if (post.creator._id === session?.user.id) {
+      return router.push("/profile");
+    }
 
     router.push(`/profile/${post.creator._id}?name=${post.creator.username}`);
   };
@@ -22,11 +29,11 @@ const PostCard = ({ post, handleEdit, handleDelete, handleTagClick }: any) => {
   const handleCopy = () => {
     setCopied(post.post);
     navigator.clipboard.writeText(post.post);
-    setTimeout(() => setCopied(false), 3000);
+    setTimeout(() => setCopied(""), 3000);
   };
 
   return (
-    <div className="prompt_card">
+    <div className="flex-1 break-inside-avoid rounded-lg border border-gray-300 bg-white/20 bg-clip-padding p-6 pb-4 backdrop-blur-lg backdrop-filter md:w-[360px] w-full h-fit">
       <div className="flex justify-between items-start gap-5">
         <div
           className="flex-1 flex justify-start items-center gap-3 cursor-pointer"
@@ -62,9 +69,9 @@ const PostCard = ({ post, handleEdit, handleDelete, handleTagClick }: any) => {
         </div>
       </div>
 
-      <p className="my-4 font-satoshi text-sm text-gray-700">{post.post}</p>
+      <p className="my-4 text-sm text-gray-700">{post.post}</p>
       <p
-        className="font-inter text-sm blue_gradient cursor-pointer"
+        className="text-sm cursor-pointer"
         onClick={() => handleTagClick && handleTagClick(post.tag)}
       >
         #{post.tag}
@@ -72,16 +79,10 @@ const PostCard = ({ post, handleEdit, handleDelete, handleTagClick }: any) => {
 
       {session?.user.id === post.creator._id && pathName === "/profile" && (
         <div className="mt-5 flex justify-center items-center gap-4 border-t border-gray-100 pt-3">
-          <p
-            className="font-inter text-sm green_gradient cursor-pointer"
-            onClick={handleEdit}
-          >
+          <p className="text-sm cursor-pointer" onClick={handleEdit}>
             Edit
           </p>
-          <p
-            className="font-inter text-sm orange_gradient cursor-pointer"
-            onClick={handleDelete}
-          >
+          <p className="text-sm cursor-pointer" onClick={handleDelete}>
             Delete
           </p>
         </div>
