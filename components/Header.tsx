@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 import {
   signIn,
   signOut,
@@ -10,6 +10,7 @@ import {
   getProviders,
   LiteralUnion,
   ClientSafeProvider,
+  SignOutParams,
 } from "next-auth/react";
 import { BuiltInProviderType } from "next-auth/providers";
 
@@ -44,7 +45,13 @@ const Header = () => {
               Create Post
             </Link>
 
-            <button type="button" onClick={signOut} className="black_btn">
+            <button
+              type="button"
+              onClick={
+                signOut as SignOutParams<true> as MouseEventHandler<HTMLButtonElement>
+              }
+              className="black_btn"
+            >
               Sign Out
             </button>
 
